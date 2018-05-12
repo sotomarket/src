@@ -62,8 +62,14 @@ namespace Sotomarket.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel model)
         {
+            if (string.IsNullOrEmpty(model.Id) && string.IsNullOrEmpty(model.Password))
+            {
+                ModelState.AddModelError("Password", "Требуется поле Пароль.");
+            }
+
             if (!ModelState.IsValid)
             {
+                SetRoles(model.Role);
                 return View(model);
             }
             try
@@ -104,6 +110,7 @@ namespace Sotomarket.Controllers
             {
                 ModelState.AddModelError("UserName", ex);
 
+                SetRoles(model.Role);
                 return View(model);
             }
         }

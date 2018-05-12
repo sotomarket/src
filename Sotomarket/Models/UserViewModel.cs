@@ -10,9 +10,10 @@ namespace Sotomarket.Models
     {
         public string Id { get; set; }
 
-        [Display(Name ="e-mail")]
+        [Display(Name = "e-mail")]
         public string Email { get; set; }
 
+        [Required]
         [Display(Name = "Имя пользователя")]
         public string UserName { get; set; }
 
@@ -21,7 +22,8 @@ namespace Sotomarket.Models
 
         [Display(Name = "Имя")]
         public string Firstname { get; set; }
-
+        
+        [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
