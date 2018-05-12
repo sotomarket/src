@@ -1,0 +1,29 @@
+﻿@model Sotomarket.Models.GoodsViewModel
+
+@{
+    ViewBag.Title = "Товары";
+}
+
+<h2>Товары</h2>
+
+@using (Html.BeginForm(new { action="Edit" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Редактирование</h4>
+        <hr />
+        @Html.Partial("EditForm",Model)
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                @Html.ActionLink("Отмена", "Index",null,new { @class="btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    
+</div>

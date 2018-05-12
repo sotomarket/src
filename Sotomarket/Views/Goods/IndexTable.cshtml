@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Sotomarket.Models.GoodsViewModel>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GoodsCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GoodsSubCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        @{
+        var showButtons = Html.Allowed("Edit") || Html.Allowed("Delete");
+        }
+        @if (showButtons)
+    {
+        <th></th>
+}
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GoodsCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GoodsSubCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        @if (showButtons)
+    {
+        <td>
+            @Html.AllowedActionLink("Редактировать", "Edit", new { id = item.Id }, new { @class = "btn btn-default" })
+            @Html.AllowedActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "btn btn-danger delete-btn" })
+        </td>
+}
+    </tr>
+}
+
+</table>

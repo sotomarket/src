@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Sotomarket.Models.GoodsViewModel>
+
+@{
+    ViewBag.Title = "Наличие на складе";
+}
+
+<h2>Наличие на складе</h2>
+
+
+<div class="row">
+    <div class="col-md-2">
+        @Html.AllowedActionLink("Добавить", "Create", null, new { @class = "btn btn-success" })
+    </div>
+
+    <form action="@Url.Action("Index")" method="get" id="searchForm">
+        <div class="col-md-4">
+            <div>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </span>
+                    <input type="text" class="form-control" name="search" placeholder="Искать" value="@ViewBag.searchValue">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label><input type="checkbox" @if (ViewBag.hideZero) { @Html.Raw("checked='checked'") } onclick="hideZeroClick(this)" /> Скрыть товары, которых нет в наличии</label>
+            <input type="hidden" name="hideZero" id="hideZero" value="@(ViewBag.hideZero?"true":"false")" />
+            <script type="text/javascript">
+                function hideZeroClick(sender) {
+                    $('#hideZero').val($(sender).prop('checked'));
+                    $('#searchForm').submit();
+                }
+            </script>
+        </div>
+    </form>
+    </div>    
+
+@Html.Partial("IndexTable", Model)

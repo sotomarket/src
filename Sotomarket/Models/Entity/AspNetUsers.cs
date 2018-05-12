@@ -55,5 +55,13 @@ namespace Sotomarket.Models.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }
+
+
+
+        public virtual ICollection<Order> Orders { get; set; }
+
+        public virtual ICollection<Sale> Sales { get; set; }
+
+        public virtual ICollection<Income> Incomes { get; set; }
     }
 }

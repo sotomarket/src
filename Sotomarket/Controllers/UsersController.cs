@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Sotomarket.Controllers
 {
-    //[Authorize(Roles ="Administrator")]
+    [Authorize(Roles = "Администратор")]
     public class UsersController : BaseController
     {
         // GET: Users
@@ -148,6 +148,7 @@ namespace Sotomarket.Controllers
                     roles.Add(new AspNetRoles { Id = Guid.NewGuid().ToString(), Name = "Директор" });
                     roles.Add(new AspNetRoles { Id = Guid.NewGuid().ToString(), Name = "Менеджер" });
                     roles.Add(new AspNetRoles { Id = Guid.NewGuid().ToString(), Name = "Продавец" });
+                    roles.Add(new AspNetRoles { Id = Guid.NewGuid().ToString(), Name = "Кассир" });
                     db.AspNetRoles.AddRange(roles);
                     db.SaveChanges();
                 }
