@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,15 +10,23 @@ namespace Sotomarket.Models
     {
         public int? Id { get; set; }
 
+        [Display(Name ="Поставщик")]
         public int SupplierId { get; set; }
 
+        [Display(Name = "Поставщик")]
         public string Supplier { get; set; }
 
+        [Display(Name = "Дата документа")]
         public DateTime IncomeDate { get; set; }
 
+        [Required]
+        [Display(Name = "Номер документа")]
         public string DocumentNumber { get; set; }
 
+        [Display(Name = "Оператор")]
         public virtual string Operator { get; set; }
+
+        public bool? Processed { get; set; }
 
         public IEnumerable<IncomeItemViewModel> IncomeItems { get; set; }
     }
@@ -25,6 +34,8 @@ namespace Sotomarket.Models
     public class IncomeItemViewModel
     {
         public int? Id { get; set; }
+
+        public int pos { get; set; }
 
         public int GoodsId { get; set; }
 

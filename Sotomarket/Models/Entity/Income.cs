@@ -27,5 +27,6 @@ namespace Sotomarket.Models.Entity
         public virtual AspNetUsers Operator { get; set; }
 
         public virtual ICollection<IncomeItem> IncomeItems { get; set; }
+        public bool Processed { get; set; }
     }
 }

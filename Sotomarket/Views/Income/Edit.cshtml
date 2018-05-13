@@ -1,0 +1,199 @@
+﻿@model Sotomarket.Models.IncomeViewModel
+
+@{
+    ViewBag.Title = "Приход";
+}
+
+<h2>Приход</h2>
+<style>
+    .selected-row {
+        background-color: #cce4ff;
+    }
+</style>
+@using (Html.BeginForm(new { action="Edit" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Редактирование</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.SupplierId, ViewBag.Suppliers as IEnumerable<SelectListItem>, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IncomeDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IncomeDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IncomeDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DocumentNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DocumentNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DocumentNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <h4>Позиции <input type="button" value="Добавить" class="btn btn-success" id="addEditItem" /></h4>
+
+    <table class="table" id="EditItemTable">
+        <thead>
+            <tr>
+                <th>
+                    Наименование
+                </th>
+                <th>
+                    Бренд
+                </th>
+                <th>
+                    Категория товара
+                </th>
+                <th>
+                    Подкатегория товара
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Сумма
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.IncomeItems != null)
+            {
+                foreach (var item in Model.IncomeItems)
+                {
+                    @Html.Partial("EditItems", item)
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            <input type="button" id="saveAndProcess" value="Сохранить и провести документ" class="btn btn-success" />
+            @Html.HiddenFor(model => model.Processed)
+
+            @Html.ActionLink("Отмена", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+}
+<script type="text/template" id="EditItemsRow">
+    @Html.Partial("EditItems",new Sotomarket.Models.IncomeItemViewModel())
+</script>
+
+@section scripts {
+<script type="text/javascript">
+    $(function () {
+        
+        function GoodsSelector(sender) {
+            $.get('@Url.Action("IndexPartial", "Goods",new { hideZero=false })', function (data) {
+                var dialog=bootbox.dialog({
+                    title: 'Товары',
+                    message: data,
+                    onEscape: true,
+                    size:'large',
+                    buttons: {
+                        cancel: {
+                            label: "Отмена",
+                            className: 'btn-default',
+                        },
+                        ok: {
+                            label: "Выбрать",
+                            className: 'btn-primary btn-select-item',
+                            callback: function () {
+                                SelectGoods($('#goodsTable > tbody > tr.selected-row'));
+                            }
+                        }
+                    }
+                });
+
+                function SelectGoods(tr) {
+                    if (!tr.length) {
+                        return;
+                    }
+
+                    var row = sender.closest('tr');
+                    $('.container-goodsid', row).val(tr.data('rowid'));
+                    $('.container-goodsname', row).val($('td.container-Name', tr).html().trim());
+                    $('.container-goodsbrand', row).val($('td.container-Brand', tr).html().trim());
+                    $('.container-goodscategory', row).val($('td.container-GoodsCategory', tr).html().trim());
+                    $('.container-goodssubcategory', row).val($('td.container-GoodsSubCategory', tr).html().trim());
+                }
+
+                dialog.init(function () {
+                    $('.btn-select-item').prop('disabled','disabled');
+                    $('#goodsTable > tbody > tr').click(function () {
+                        $('#goodsTable > tbody > tr').removeClass('selected-row');
+                        $(this).addClass('selected-row');
+                        $('.btn-select-item').prop('disabled', '');
+                    });
+
+                    $('#goodsTable > tbody > tr').dblclick(function () {
+                        SelectGoods($(this));
+                        dialog.modal('hide');
+                    });
+                });
+            });
+        }
+
+
+        $('#saveAndProcess').click(function () {
+            $('input[name=Processed]').val("true");
+            $(this).closest('form').submit();
+        });
+
+        $('#addEditItem').click(function () {
+            var lastPos = 0;
+            $('#EditItemTable > tbody > tr').each(function () {
+                var pos = $(this).attr('data-rownum') * 1;
+                if (lastPos < pos) {
+                    lastPos = pos + 1;
+                }
+            });
+
+            var row = $($('#EditItemsRow').html()).appendTo('#EditItemTable > tbody');
+            row.attr('data-rownum', lastPos);
+            $('input[name="IncomeItems[0][GoodsId]"]', row).prop('name', 'IncomeItems[' + lastPos+'][GoodsId]');
+            $('input[name="IncomeItems[0][GoodsName]"]', row).prop('name', 'IncomeItems[' + lastPos +'][GoodsName]');
+            $('input[name="IncomeItems[0][GoodsBrand]"]', row).prop('name', 'IncomeItems[' + lastPos +'][GoodsBrand]');
+            $('input[name="IncomeItems[0][GoodsCategory]"]', row).prop('name', 'IncomeItems[' + lastPos +'][GoodsCategory]');
+            $('input[name="IncomeItems[0][GoodsSubCategory]"]', row).prop('name', 'IncomeItems[' + lastPos +'][GoodsSubCategory]');
+            $('input[name="IncomeItems[0][Amount]"]', row).prop('name', 'IncomeItems[' + lastPos +'][Amount]');
+            $('input[name="IncomeItems[0][Price]"]', row).prop('name', 'IncomeItems[' + lastPos +'][Price]');
+            $('.goods-selector',row).click(function () {
+                GoodsSelector($(this));
+            });
+
+            $('.btn-delete-row', row).click(function () {
+                $(this).closest('tr').remove();
+            });
+        });
+
+        $('.goods-selector').click(function () {
+            GoodsSelector($(this));
+        });
+
+        $('.btn-delete-row').click(function () {
+            $(this).closest('tr').remove();
+        });
+    });
+</script>   
+}

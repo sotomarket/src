@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Sotomarket.Models.IncomeViewModel>
+
+@{
+    ViewBag.Title = "Приход";
+}
+
+<h2>Приход</h2>
+<div class="row">
+<div class="col-md-2">
+    @Html.AllowedActionLink("Добавить", "Create", null, new { @class = "btn btn-success" })
+</div>
+
+<form action="@Url.Action("Index")" method="get" id="searchForm">
+    <div class="col-md-4">
+        <div>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
+                <input type="text" class="form-control" name="search" placeholder="Искать" value="@ViewBag.searchValue">
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IncomeDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Operator)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentNumber)
+                @if (item.Processed==true)
+                {
+                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true" style="color: green;" title="Документ проведен"></span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IncomeDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Operator)
+            </td>
+            <td>
+                @if (item.Processed==true)
+                {
+                    @Html.ActionLink("Просмотр", "Details", new { id = item.Id }, new { @class="btn btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.Id }, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+        }
+
+    </table>

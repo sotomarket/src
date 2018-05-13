@@ -32,9 +32,11 @@ namespace Sotomarket.Controllers
             return View(GetList(!hideZero, true, 50, page, search));
         }
 
-        public ActionResult IndexPartial(int page=0, string search = "")
+        public ActionResult IndexPartial(bool hideZero = true, int page =0, string search = "")
         {
-            return PartialView(GetList(false, true, 50, page, search));
+            ViewBag.hideZero = hideZero;
+            ViewBag.searchValue = search;
+            return PartialView(GetList(!hideZero, true, 50, page, search));
         }
 
         [Authorize(Roles = "Администратор,Директор,Менеджер")]
@@ -220,7 +222,7 @@ namespace Sotomarket.Controllers
                                 x.GoodsCategory.Contains(search) ||
                                 x.Brand.Contains(search));
                 }
-                list = list.Skip(page * limit).Take(limit);
+                list = list.OrderBy(x=>x.Name).Skip(page * limit).Take(limit);
                 return list.ToArray();
             }
         }

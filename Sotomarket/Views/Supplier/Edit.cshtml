@@ -6,7 +6,7 @@
 
 <h2>Поставщики</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(new { action="Edit" }))
 {
     @Html.AntiForgeryToken()
     

@@ -24,12 +24,15 @@ namespace Sotomarket
                       "~/Scripts/bootbox.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/select2.full.js",
+                      "~/Scripts/bootstrap-datepicker.js",
+                      "~/Scripts/locales/bootstrap-datepicker.ru.min.js",
                       "~/Scripts/site.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/css/select2.css",
                       "~/Content/select2-bootstrap.css",
+                      "~/Content/bootstrap-datepicker.css",
                       "~/Content/site.css"));
         }
     }

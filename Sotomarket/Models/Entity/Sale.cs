@@ -21,6 +21,8 @@ namespace Sotomarket.Models.Entity
 
         public string Paytype { get; set; }
 
+        public bool Processed { get; set; }
+
         [Required]
         public string OperatorId { get; set; }
 

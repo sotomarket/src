@@ -18,6 +18,14 @@
         return false;
     });
     initGoodsCategorySelects();
+
+    $('input[data-val-date]').datepicker({
+        format: "dd.mm.yyyy",
+        weekStart: 1,
+        language: "ru",
+        todayBtn: "linked",
+        autoclose: true
+    });
 });
 
 function initGoodsCategorySelects() {
@@ -27,7 +35,7 @@ function initGoodsCategorySelects() {
     if (goodsSubCategoryId.length) {
         var goodsCategoryId = $('#GoodsCategoryId');
         goodsSubCategoryId.select2();
-        Select2Cascade(goodsCategoryId, goodsSubCategoryId,'/GoodsSubCategory/ListJson?categoryId=:parentId:')
+        Select2Cascade(goodsCategoryId, goodsSubCategoryId, '/GoodsSubCategory/ListJson?categoryId=:parentId:');
     }
 }
 

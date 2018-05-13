@@ -1,0 +1,106 @@
+﻿@model Sotomarket.Models.IncomeViewModel
+
+@{
+    ViewBag.Title = "Приход";
+}
+
+<h2>Приход</h2>
+<style>
+    .selected-row {
+        background-color: #cce4ff;
+    }
+</style>
+    
+<div class="form-horizontal">
+    <h4>Просмотр</h4>
+    <hr />
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SupplierId, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.Supplier, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IncomeDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.IncomeDate, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DocumentNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.DocumentNumber, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <h4>Позиции</h4>
+
+    <table class="table" id="EditItemTable">
+        <thead>
+            <tr>
+                <th>
+                    Наименование
+                </th>
+                <th>
+                    Бренд
+                </th>
+                <th>
+                    Категория товара
+                </th>
+                <th>
+                    Подкатегория товара
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Сумма
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.IncomeItems != null)
+            {
+                foreach (var item in Model.IncomeItems)
+                {
+            <tr>
+                <td>
+                   <input type="text" class="form-control container-goodsname" readonly="readonly" value="@item.GoodsName" />
+                </td>
+                <td>
+                    <input type="text" class="form-control container-goodsbrand" readonly="readonly" value="@item.GoodsBrand" />
+                </td>
+                <td>
+                    <input type="text" class="form-control container-goodscategory" readonly="readonly" value="@item.GoodsCategory" />
+                </td>
+                <td>
+                    <input type="text" class="form-control container-goodssubcategory" readonly="readonly" value="@item.GoodsSubCategory" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="@item.Amount" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="@item.Price" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" readonly="readonly" value="@(item.Amount*item.Price)" />
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+
+            @Html.ActionLink("Отмена", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
