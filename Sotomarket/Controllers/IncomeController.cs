@@ -60,7 +60,8 @@ namespace Sotomarket.Controllers
                 var entity = db.Incomes.First(x => x.Id == id);
                 if (entity.Processed)
                 {
-                    throw new Exception("Документ уже проведен, редактирование запрещено");
+                    // Документ проведен, редактирование запрещено. Редирект на просмотр
+                    RedirectToAction("Details", new { id });
                 }
                 var model = new IncomeViewModel
                 {
@@ -88,6 +89,11 @@ namespace Sotomarket.Controllers
                     Value = x.Id.ToString(),
                     Text = x.Name
                 }).ToList();
+                var pos = 0;
+                foreach (var item in model.IncomeItems)
+                {
+                    item.pos = pos++;
+                }
                 return View(model);
             }
         }
@@ -117,14 +123,8 @@ namespace Sotomarket.Controllers
                     GoodsBrand = x.Goods.Brand,
                     GoodsCategory = x.Goods.GoodsCategory.Name,
                     GoodsName = x.Goods.Name,
-                    GoodsSubCategory = x.Goods.GoodsSubCategory == null ? "" : x.Goods.GoodsSubCategory.Name
+                    GoodsSubCategory = x.Goods.GoodsSubCategory == null ? "" : x.Goods.GoodsSubCategory.Name,
                 }).ToArray();
-
-                ViewBag.Suppliers = db.Suppliers.Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-                    Text = x.Name
-                }).ToList();
                 return View(model);
             }
         }
@@ -142,6 +142,11 @@ namespace Sotomarket.Controllers
                         Value = x.Id.ToString(),
                         Text = x.Name
                     }).ToList();
+                }
+                var pos = 0;
+                foreach (var item in model.IncomeItems)
+                {
+                    item.pos = pos++;
                 }
                 return View(model);
             }

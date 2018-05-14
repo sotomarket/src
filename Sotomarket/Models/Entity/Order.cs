@@ -9,6 +9,10 @@ namespace Sotomarket.Models.Entity
 {
     public class Order
     {
+        public Order()
+        {
+            Sales = new HashSet<Sale>();
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
