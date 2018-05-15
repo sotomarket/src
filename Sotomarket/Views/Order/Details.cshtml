@@ -1,0 +1,142 @@
+﻿@model Sotomarket.Models.OrderViewModel
+
+@{
+    ViewBag.Title = "Заказ";
+}
+
+<h2>Заказ</h2>
+
+<div>
+    <h4>Просмотр</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientIdentifier)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientIdentifier)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClientDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClientDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Operator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Operator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HasSale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HasSale)
+        </dd>
+
+    </dl>
+    <h4>Позиции</h4>
+
+    <table class="table" id="EditItemTable">
+        <thead>
+            <tr>
+                <th>
+                    Наименование
+                </th>
+                <th>
+                    Бренд
+                </th>
+                <th>
+                    Категория товара
+                </th>
+                <th>
+                    Подкатегория товара
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Сумма
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.OrderItems != null)
+            {
+                foreach (var item in Model.OrderItems)
+                {
+            <tr>
+                <td>
+                    <input type="text" class="form-control container-goodsname" readonly="readonly" value="@item.GoodsName" />
+                </td>
+                <td>
+                    <input type="text" class="form-control container-goodsbrand" readonly="readonly" value="@item.GoodsBrand" />
+                </td>
+                <td>
+                    <input type="text" class="form-control container-goodscategory" readonly="readonly" value="@item.GoodsCategory" />
+                </td>
+                <td>
+                    <input type="text" class="form-control container-goodssubcategory" readonly="readonly" value="@item.GoodsSubCategory" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="@item.Amount" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="@item.Price" />
+                </td>
+                <td>
+                    <input type="text" class="form-control" readonly="readonly" value="@(item.Amount*item.Price)" />
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

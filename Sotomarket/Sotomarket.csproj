@@ -175,6 +175,8 @@
     <Compile Include="Classes\HtmlExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\SaleController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\GoodsController.cs" />
     <Compile Include="Controllers\GoodsSubCategoryController.cs" />
@@ -219,6 +221,8 @@
     <Compile Include="Models\GoodsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Controllers\IncomeController.cs" />
+    <Compile Include="Models\SaleViewModel.cs" />
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\IncomeViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
@@ -279,6 +283,7 @@
     <Content Include="Content\bootstrap-datepicker3.css.map" />
     <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
@@ -497,9 +502,14 @@
     <Content Include="Views\Income\EditItems.cshtml" />
     <Content Include="Views\Goods\IndexPartial.cshtml" />
     <Content Include="Views\Income\Details.cshtml" />
+    <Content Include="Views\Order\EditItems.cshtml" />
+    <Content Include="Views\Order\Details.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Order\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Sale\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

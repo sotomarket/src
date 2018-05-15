@@ -29,6 +29,7 @@ namespace Sotomarket.Controllers
         {
             ViewBag.hideZero = hideZero;
             ViewBag.searchValue = search;
+            ViewBag.page = page;
             return View(GetList(!hideZero, true, 50, page, search));
         }
 
@@ -36,6 +37,7 @@ namespace Sotomarket.Controllers
         {
             ViewBag.hideZero = hideZero;
             ViewBag.searchValue = search;
+            ViewBag.page = page;
             return PartialView(GetList(!hideZero, true, 50, page, search));
         }
 

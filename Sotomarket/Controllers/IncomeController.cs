@@ -14,6 +14,8 @@ namespace Sotomarket.Controllers
         // GET: Income
         public ActionResult Index(int page = 0, string search = "")
         {
+            ViewBag.searchValue = search;
+            ViewBag.page = page;
             using (var db = new SmDbContext())
             {
                 var list = db.Incomes.Select(x => new IncomeViewModel

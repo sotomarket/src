@@ -1,0 +1,34 @@
+﻿@model Sotomarket.Models.OrderItemViewModel
+
+<tr data-rownum="@Model.pos">
+    <td>
+        <div class="input-group">
+            <input type="text" class="form-control container-goodsname" name="OrderItems[@Model.pos][GoodsName]" readonly="readonly" value="@Model.GoodsName" />
+            <span class="input-group-btn">
+                <button class="btn btn-default goods-selector" type="button">...</button>
+            </span>
+        </div>
+        <input type="hidden" class="container-goodsid" name="OrderItems[@Model.pos][GoodsId]" value="@Model.GoodsId" />
+    </td>
+    <td>
+        <input type="text" class="form-control container-goodsbrand" name="OrderItems[@Model.pos][GoodsBrand]" readonly="readonly" value="@Model.GoodsBrand" />
+    </td>
+    <td>
+        <input type="text" class="form-control container-goodscategory" name="OrderItems[@Model.pos][GoodsCategory]" readonly="readonly" value="@Model.GoodsCategory" />
+    </td>
+    <td>
+        <input type="text" class="form-control container-goodssubcategory" name="OrderItems[@Model.pos][GoodsSubCategory]" readonly="readonly" value="@Model.GoodsSubCategory" />
+    </td>
+    <td>
+        <input type="text" class="form-control" name="OrderItems[@Model.pos][Amount]" value="@Model.Amount" />
+    </td>
+    <td>
+        <input type="text" class="form-control container-goodsprice" readonly="readonly" name="OrderItems[@Model.pos][Price]" value="@Model.Price" />
+    </td>
+    <td>
+        <input type="text" class="form-control" readonly="readonly" value="@(Model.Amount*Model.Price)" />
+    </td>
+    <td>
+        <input type="button" class="btn btn-danger btn-delete-row" value="Удалить" />
+    </td>
+</tr>
