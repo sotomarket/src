@@ -33,7 +33,8 @@ namespace Sotomarket.Models
         public virtual string Operator { get; set; }
 
         [Display(Name = "Дата реализации")]
-        public DateTime RealisationDate { get; internal set; }
+        [Required]
+        public DateTime? RealisationDate { get; set; }
 
         public IEnumerable<SaleItemViewModel> SaleItems { get; set; }
 

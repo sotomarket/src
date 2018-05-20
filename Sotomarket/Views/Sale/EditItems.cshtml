@@ -1,0 +1,30 @@
+﻿@model Sotomarket.Models.SaleItemViewModel
+
+<tr data-rownum="@Model.pos">
+    <td>
+        <input type="text" class="form-control container-goodsname" name="SaleItems[@Model.pos][GoodsName]" readonly="readonly" value="@Model.GoodsName" />
+        <input type="hidden" class="container-goodsid" name="SaleItems[@Model.pos][GoodsId]" value="@Model.GoodsId" />
+        <input type="hidden" name="SaleItems[@Model.pos][OrderItemId]" value="@Model.OrderItemId" />
+    </td>
+    <td>
+        <input type="text" class="form-control container-goodsbrand" name="SaleItems[@Model.pos][GoodsBrand]" readonly="readonly" value="@Model.GoodsBrand" />
+    </td>
+    <td>
+        <input type="text" class="form-control container-goodscategory" name="SaleItems[@Model.pos][GoodsCategory]" readonly="readonly" value="@Model.GoodsCategory" />
+    </td>
+    <td>
+        <input type="text" class="form-control container-goodssubcategory" name="SaleItems[@Model.pos][GoodsSubCategory]" readonly="readonly" value="@Model.GoodsSubCategory" />
+    </td>
+    <td>
+        <input type="text" class="form-control" name="SaleItems[@Model.pos][Amount]" value="@Model.Amount" />
+    </td>
+    <td>
+        <input type="text" class="form-control" name="SaleItems[@Model.pos][Price]" value="@Model.Price" />
+    </td>
+    <td>
+        <input type="text" class="form-control" readonly="readonly" value="@(Model.Amount*Model.Price-Model.Discount)" />
+    </td>
+    <td>
+        <input type="text" class="form-control" name="SaleItems[@Model.pos][Discount]" value="@Model.Discount" />
+    </td>
+</tr>

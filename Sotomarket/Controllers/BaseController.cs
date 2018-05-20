@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Sotomarket.Controllers
 {
+    [Authorize]
     public abstract class BaseController : Controller
     {
         public JsonResult SuccessJson()

@@ -26,6 +26,7 @@ namespace Sotomarket
                       "~/Scripts/select2.full.js",
                       "~/Scripts/bootstrap-datepicker.js",
                       "~/Scripts/locales/bootstrap-datepicker.ru.min.js",
+                      "~/Scripts/printThis.js",
                       "~/Scripts/site.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

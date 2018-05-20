@@ -175,6 +175,7 @@
     <Compile Include="Classes\HtmlExtensions.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
@@ -221,6 +222,8 @@
     <Compile Include="Models\GoodsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Controllers\IncomeController.cs" />
+    <Compile Include="Models\ReportEmployeeViewModel.cs" />
+    <Compile Include="Models\ReportSalesViewModel.cs" />
     <Compile Include="Models\SaleViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\IncomeViewModel.cs" />
@@ -434,6 +437,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\printThis.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -506,10 +510,17 @@
     <Content Include="Views\Order\Details.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Edit.cshtml" />
+    <Content Include="Views\Sale\Index.cshtml" />
+    <Content Include="Views\Sale\Edit.cshtml" />
+    <Content Include="Views\Sale\EditItems.cshtml" />
+    <Content Include="Views\Sale\Details.cshtml" />
+    <Content Include="Views\Reports\EmployeesRequest.cshtml" />
+    <Content Include="Views\Reports\SalesRequest.cshtml" />
+    <Content Include="Views\Reports\Employees.cshtml" />
+    <Content Include="Views\Reports\Sales.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Sale\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

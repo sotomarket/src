@@ -62,7 +62,7 @@ namespace Sotomarket.Controllers
                 }
                 var model = new SaleViewModel
                 {
-                    Id = entity.Id,
+                    OrderId = entity.Id,
                     ClientAddress = entity.ClientAddress,
                     ClientDescription = entity.ClientDescription,
                     OrderDate = entity.OrderDate,
@@ -71,9 +71,9 @@ namespace Sotomarket.Controllers
                     Operator = entity.Operator.Lastname + " " + entity.Operator.Firstname,
                 };
 
-                model.SaleItems = db.SaleItems.Where(x => x.SaleId == orderId).Select(x => new SaleItemViewModel
+                model.SaleItems = db.OrderItems.Where(x => x.OrderId == orderId).Select(x => new SaleItemViewModel
                 {
-                    Id = x.Id,
+                    OrderItemId = x.Id,
                     Amount = x.Amount,
                     Price = x.Goods.Price,
                     GoodsId = x.GoodsId,
@@ -204,7 +204,7 @@ namespace Sotomarket.Controllers
                     entity.OrderId = model.OrderId;
                     entity.Paytype = model.Paytype;
                     entity.OperatorId = db.AspNetUsers.First(x => x.UserName == User.Identity.Name).Id;
-                    entity.RealizationDate = model.RealisationDate;
+                    entity.RealizationDate = model.RealisationDate.Value;
                     entity.Processed = model.Processed??false;
                     db.SaveChanges();
 
@@ -251,8 +251,9 @@ namespace Sotomarket.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
+                ModelState.AddModelError("Id", ex);
                 return View();
             }
         }

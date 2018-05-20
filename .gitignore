@@ -34,3 +34,4 @@ _[Ss]cripts
 *.dot[Cc]over
 *.dot[Cc]over
 /.vs
+/Deploy

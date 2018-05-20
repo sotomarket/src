@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Sotomarket.Models.ReportSalesViewModel>
+@{
+    ViewBag.Title = "Отчет по заказам и продажам";
+}
+<br />
+<button class="btn btn-primary" id="doPrint">
+    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Печать отчета
+</button>
+<div id="printContainer">
+    <h2>Отчет по заказам и продажам с @ViewBag.Start по @ViewBag.End</h2>
+
+    <hr />
+    <table class="table table-striped table-bordered reportTable">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th>Кол-во заказов</th>
+                <th>Кол-во продаж</th>
+                <th>Потенциальная сумма по заказам, тг.</th>
+                <th>Сумма реализации, тг. </th>
+                <th>Количество отложенных продаж</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model)
+            {
+                <tr>
+                    <td>
+                        @row.OrderDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @row.OrdersCount
+                    </td>
+                    <td>
+                        @row.SalesCount
+                    </td>
+                    <td>
+                        @row.PotentialSum
+                    </td>
+                    <td>
+                        @row.RealisedSum
+                        @if (row.DiscountSum > 0)
+                        {
+                            <br /><span>Сумма скидок: @row.DiscountSum</span>
+                        }
+                    </td>
+                    <td>
+                        @row.DeferredTransactionsCount
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#doPrint').click(function () {
+                $('#printContainer').printThis();
+            });
+        })
+    </script>
+}

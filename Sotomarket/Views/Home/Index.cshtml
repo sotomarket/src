@@ -5,30 +5,66 @@
 <h1>Учет товаров SOTOMARKET</h1>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Справочники</h2>
-        <ul class="list-group">
-            <li class="list-group-item">@Html.ActionLink("Категории товаров", "", "GoodsCategory")</li>
-            <li class="list-group-item">@Html.ActionLink("Подкатегории товаров", "", "GoodsSubCategory")</li>
-            <li class="list-group-item">@Html.ActionLink("Товары", "", "Goods")</li>
-            <li class="list-group-item">@Html.ActionLink("Поставщики", "", "Supplier")</li>
-        </ul>
+    @if (Html.Allowed("Index", "Income") || Html.Allowed("Index", "Order") || Html.Allowed("Index", "Sale"))
+    {
+        <div class="col-md-4">
+            <h2>Операции</h2>
+            <ul class="list-group">
+                @if (Html.Allowed("Index", "Income"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Приход", "", "Income")</li>
+                }
+                @if (Html.Allowed("Index", "Order"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Заказ", "", "Order")</li>
+                }
+                @if (Html.Allowed("Index", "Sale"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Продажа", "", "Sale")</li>
+                }
+                </ul>
+        </div>
+    }
+    @if (Html.Allowed("Employees", "Reports") || Html.Allowed("Sales", "Reports"))
+    {
+        <div class="col-md-4">
+            <h2>Отчеты</h2>
+            <ul class="list-group">
+                @if (Html.Allowed("Employees", "Reports"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Отчет по сотрудникам", "Employees", "Reports")</li>
+                }
+                @if (Html.Allowed("Sales", "Reports"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Отчет по продажам", "Sales", "Reports")</li>
+                }
+                </ul>
 
+        </div>
+    }
+    @if (Html.Allowed("Index", "GoodsCategory") || Html.Allowed("Index", "GoodsSubCategory") || Html.Allowed("Index", "Goods") || Html.Allowed("Index", "Supplier"))
+    {
+        <div class="col-md-4">
+            <h2>Справочники</h2>
+            <ul class="list-group">
+                @if (Html.Allowed("Index", "GoodsCategory"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Категории товаров", "", "GoodsCategory")</li>
+                }
+                @if (Html.Allowed("Index", "GoodsSubCategory"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Подкатегории товаров", "", "GoodsSubCategory")</li>
+                }
+                @if (Html.Allowed("Index", "Goods"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Товары", "", "Goods")</li>
+                }
+                @if (Html.Allowed("Index", "Supplier"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Поставщики", "", "Supplier")</li>
+                }
+                </ul>
+
+        </div>
+    }
     </div>
-    <div class="col-md-4">
-        <h2>Операции</h2>
-        <ul class="list-group">
-            <li class="list-group-item">@Html.ActionLink("Приход", "", "Income")</li>
-            <li class="list-group-item">@Html.ActionLink("Заказ", "", "Order")</li>
-            <li class="list-group-item">@Html.ActionLink("Продажа", "", "Sale")</li>
-        </ul>
-
-    </div><div class="col-md-4">
-    <h2>Отчеты</h2>
-    <ul class="list-group">
-        <li class="list-group-item">@Html.ActionLink("Отчет по сотрудникам", "Employees", "Reports")</li>
-        <li class="list-group-item">@Html.ActionLink("Отчет по продажам", "Sales", "Reports")</li>
-    </ul>
-
-</div>
-</div>
