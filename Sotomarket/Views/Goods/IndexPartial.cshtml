@@ -24,6 +24,19 @@
                     $('#hideZero').val($(sender).prop('checked'));
                     $('#searchForm').submit();
                 }
+
+                $('#searchForm').submit(function (event) {
+                    var formData = $(this).serialize();
+                    $.get('@Url.Action("IndexPartial","Goods")', formData, function (data) {
+                        $('#goodsTable').parent().html(data);
+                        $('#goodsTable > tbody > tr').dblclick(function () {
+                            SelectGoods($(this));
+                            bootbox.hideAll()
+                        });
+                    });
+                    event.preventDefault();
+                    return false;
+                });
             </script>
         </div>
     </form>

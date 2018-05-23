@@ -16,15 +16,15 @@
         <input type="text" class="form-control container-goodssubcategory" name="SaleItems[@Model.pos][GoodsSubCategory]" readonly="readonly" value="@Model.GoodsSubCategory" />
     </td>
     <td>
-        <input type="text" class="form-control" name="SaleItems[@Model.pos][Amount]" value="@Model.Amount" />
+        <input type="text" class="form-control container-amount" name="SaleItems[@Model.pos][Amount]" value="@Model.Amount" />
     </td>
     <td>
-        <input type="text" class="form-control" name="SaleItems[@Model.pos][Price]" value="@Model.Price" />
+        <input type="text" class="form-control container-price" name="SaleItems[@Model.pos][Price]" value="@Model.Price" />
     </td>
     <td>
-        <input type="text" class="form-control" readonly="readonly" value="@(Model.Amount*Model.Price-Model.Discount)" />
+        <input type="text" class="form-control container-rowsum" readonly="readonly" value="@(Model.Amount*Model.Price-Model.Discount)" />
     </td>
     <td>
-        <input type="text" class="form-control" name="SaleItems[@Model.pos][Discount]" value="@Model.Discount" />
+        <input type="text" class="form-control container-discount" name="SaleItems[@Model.pos][Discount]" value="@Model.Discount" />
     </td>
 </tr>

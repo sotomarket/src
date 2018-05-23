@@ -231,7 +231,7 @@ namespace Sotomarket.Controllers
                     var tr = db.Database.BeginTransaction();
 
                     var entity = db.Incomes.First(x => x.Id == id);
-                    foreach(var item in entity.IncomeItems)
+                    foreach(var item in db.IncomeItems.Where(x=>x.IncomeId==id))
                     {
                         db.IncomeItems.Remove(item);
                     }

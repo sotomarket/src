@@ -13,7 +13,7 @@
                     }
                 }
             }
-            bootbox.alert(message);
+            bootbox.alert(message, function () { location.reload(); });
         });
         return false;
     });

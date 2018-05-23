@@ -119,9 +119,25 @@
 
 @section scripts {
     <script type="text/javascript">
+        var globSender;
+        function SelectGoods(tr) {
+            if (!tr.length) {
+                return;
+            }
+
+            var row = globSender.closest('tr');
+            $('.container-goodsid', row).val(tr.data('rowid'));
+            $('.container-goodsname', row).val($('td.container-Name', tr).html().trim());
+            $('.container-goodsbrand', row).val($('td.container-Brand', tr).html().trim());
+            $('.container-goodscategory', row).val($('td.container-GoodsCategory', tr).html().trim());
+            $('.container-goodssubcategory', row).val($('td.container-GoodsSubCategory', tr).html().trim());
+            $('.container-goodsprice', row).val($('td.container-GoodsPrice', tr).html().trim());
+        }
+
     $(function () {
 
         function GoodsSelector(sender) {
+            globSender = sender;
             $.get('@Url.Action("IndexPartial", "Goods",new { hideZero=false })', function (data) {
                 var dialog=bootbox.dialog({
                     title: 'Товары',
@@ -143,20 +159,6 @@
                     }
                 });
 
-                function SelectGoods(tr) {
-                    if (!tr.length) {
-                        return;
-                    }
-
-                    var row = sender.closest('tr');
-                    $('.container-goodsid', row).val(tr.data('rowid'));
-                    $('.container-goodsname', row).val($('td.container-Name', tr).html().trim());
-                    $('.container-goodsbrand', row).val($('td.container-Brand', tr).html().trim());
-                    $('.container-goodscategory', row).val($('td.container-GoodsCategory', tr).html().trim());
-                    $('.container-goodssubcategory', row).val($('td.container-GoodsSubCategory', tr).html().trim());
-                    $('.container-goodsprice', row).val($('td.container-GoodsPrice', tr).html().trim());
-                }
-
                 dialog.init(function () {
                     $('.btn-select-item').prop('disabled','disabled');
                     $('#goodsTable > tbody > tr').click(function () {
@@ -172,6 +174,12 @@
                 });
             });
         }
+
+        function recalcSum() {
+            var tr = $(this).closest('tr');
+            $('.container-rowsum', tr).val(parseFloat($('.container-amount', tr).val()) * parseFloat($('.container-goodsprice', tr).val().replace(/,/, '.')));
+        }
+        $('.container-amount').change(recalcSum);
 
         $('#addEditItem').click(function () {
             var lastPos = 0;
@@ -189,7 +197,7 @@
             $('input[name="OrderItems[0][GoodsBrand]"]', row).prop('name', 'OrderItems[' + lastPos +'][GoodsBrand]');
             $('input[name="OrderItems[0][GoodsCategory]"]', row).prop('name', 'OrderItems[' + lastPos +'][GoodsCategory]');
             $('input[name="OrderItems[0][GoodsSubCategory]"]', row).prop('name', 'OrderItems[' + lastPos +'][GoodsSubCategory]');
-            $('input[name="OrderItems[0][Amount]"]', row).prop('name', 'OrderItems[' + lastPos +'][Amount]');
+            $('input[name="OrderItems[0][Amount]"]', row).prop('name', 'OrderItems[' + lastPos + '][Amount]').change(recalcSum);
             $('input[name="OrderItems[0][Price]"]', row).prop('name', 'OrderItems[' + lastPos +'][Price]');
             $('.goods-selector',row).click(function () {
                 GoodsSelector($(this));

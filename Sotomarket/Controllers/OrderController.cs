@@ -204,7 +204,7 @@ namespace Sotomarket.Controllers
                     var tr = db.Database.BeginTransaction();
 
                     var entity = db.Orders.First(x => x.Id == id);
-                    foreach(var item in entity.OrderItems)
+                    foreach(var item in db.OrderItems.Where(x=>x.OrderId==id))
                     {
                         db.OrderItems.Remove(item);
                     }

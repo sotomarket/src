@@ -2,8 +2,6 @@
     ViewBag.Title = "Главная";
 }
 
-<h1>Учет товаров SOTOMARKET</h1>
-
 <div class="row">
     @if (Html.Allowed("Index", "Income") || Html.Allowed("Index", "Order") || Html.Allowed("Index", "Sale"))
     {

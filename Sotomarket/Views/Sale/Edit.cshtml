@@ -150,6 +150,13 @@
             $('input[name=Processed]').val("true");
             $(this).closest('form').submit();
         });
+        function recalcSum() {
+            var tr = $(this).closest('tr');
+            $('.container-rowsum', tr).val(parseFloat($('.container-amount', tr).val()) * parseFloat($('.container-price', tr).val().replace(/,/, '.')) - parseFloat($('.container-discount', tr).val().replace(/,/, '.')));
+        }
+        $('.container-amount').change(recalcSum);
+        $('.container-discount').change(recalcSum);
+        $('.container-price').change(recalcSum);
     });
     </script>
 }
