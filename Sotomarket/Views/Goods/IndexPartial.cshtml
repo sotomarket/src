@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Sotomarket.Models.GoodsViewModel>
-
+<style>
+    .bootbox-body{
+        overflow:auto;
+    }
+</style>
 <div class="row">
     <div class="col-md-2">
         @Html.AllowedActionLink("Добавить", "Create", null, new { @class = "btn btn-success" })

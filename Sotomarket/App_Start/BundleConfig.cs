@@ -31,7 +31,7 @@ namespace Sotomarket
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/css/select2.css",
+                      "~/Content/select2/select2.css",
                       "~/Content/select2-bootstrap.css",
                       "~/Content/bootstrap-datepicker.css",
                       "~/Content/site.css"));
