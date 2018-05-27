@@ -223,6 +223,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Controllers\IncomeController.cs" />
     <Compile Include="Models\ReportEmployeeViewModel.cs" />
+    <Compile Include="Models\ReportGoodsResult.cs" />
     <Compile Include="Models\ReportSalesViewModel.cs" />
     <Compile Include="Models\SaleViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
@@ -519,6 +520,8 @@
     <Content Include="Views\Reports\SalesRequest.cshtml" />
     <Content Include="Views\Reports\Employees.cshtml" />
     <Content Include="Views\Reports\Sales.cshtml" />
+    <Content Include="Views\Reports\GoodsRequest.cshtml" />
+    <Content Include="Views\Reports\Goods.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

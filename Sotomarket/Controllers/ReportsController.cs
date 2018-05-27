@@ -2,6 +2,7 @@
 using Sotomarket.Models.Entity;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -152,5 +153,59 @@ namespace Sotomarket.Controllers
                 return View(result);
             }
         }
+
+
+        [HttpGet]
+        public ActionResult Goods()
+        {
+            return View("GoodsRequest");
+        }
+
+
+        [HttpPost]
+        public ActionResult Goods(DateTime start, DateTime end, int goodsId)
+        {
+            ViewBag.Start = start.ToShortDateString();
+            ViewBag.End = end.ToShortDateString();
+            using (var db = new SmDbContext())
+            {
+                var dayCount = (end - start).Days + 1;
+
+                var result=db.Database.SqlQuery<ReportGoodsResult>(@"select g.Id, 
+
+        g.Name,
+        g.Price,
+        g.Quantity,
+        dt.dat,
+        income.DaySum IncomeDaySum,
+        income.dayamount IncomeDayAmount,
+        expense.daysum ExpenseDaySum,
+        expense.dayamount ExpenseDayAmount,
+        g.Quantity - totalIncomeAmount + totalExpenseAmount +
+            sum(isnull(income.DayAmount, 0)) over(order by dt.dat) -
+            sum(isnull(expense.DayAmount, 0)) over(order by dt.dat) DatQuantity
+from
+[dbo].[Goods] g
+cross join
+(select dateadd(dd, rn - 1, @dbeg) dat from(select top "+ dayCount+@" row_number() over(order by column_name) rn from INFORMATION_SCHEMA.COLUMNS) t) dt
+left join
+(select GoodsId, cast(IncomeDate as date) dat, sum(Amount * Price) DaySum, sum(amount) DayAmount
+  from[dbo].[Incomes] i join[dbo].[IncomeItems] ii on i.Id = ii.IncomeId where i.Processed = 1 and GoodsId = @goodsId and IncomeDate between @dbeg and @dend
+  group by GoodsId, cast(IncomeDate as date)) income on income.dat = dt.dat and g.Id = income.GoodsId
+left join
+(select GoodsId, cast(RealizationDate as date) dat, sum(Amount * Price) DaySum, sum(amount) DayAmount
+  from[dbo].[Sales] s join[dbo].[SaleItems] si on s.Id = si.SaleId where s.Processed = 1 and GoodsId = @goodsId and RealizationDate between @dbeg and @dend
+  group by GoodsId, cast(RealizationDate as date)) expense on expense.dat = dt.dat and g.Id = expense.GoodsId
+left join
+(select sum(amount) totalIncomeAmount from[dbo].[Incomes] i join[dbo].[IncomeItems] ii on i.Id = ii.IncomeId where i.Processed = 1 and ii.GoodsId = @goodsId and i.IncomeDate between @dbeg and getdate()) ti on 1 = 1
+left join
+(select sum(amount) totalExpenseAmount from[dbo].[Sales] s join[dbo].[SaleItems] si on s.Id = si.SaleId where s.Processed = 1 and GoodsId = @goodsId and RealizationDate between @dbeg and GETDATE()) ts on 1 = 1
+where g.Id = @goodsId", new SqlParameter("dbeg", start),
+    new SqlParameter("dend", end),
+    new SqlParameter("goodsId", goodsId)).ToArray();
+                return View(result);
+            }
+        }
+
     }
 }

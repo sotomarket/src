@@ -36,7 +36,12 @@
                 {
                     <li class="list-group-item">@Html.ActionLink("Отчет по продажам", "Sales", "Reports")</li>
                 }
-                </ul>
+
+                @if (Html.Allowed("Goods", "Reports"))
+                {
+                    <li class="list-group-item">@Html.ActionLink("Движение по товару", "Goods", "Reports")</li>
+                }
+            </ul>
 
         </div>
     }

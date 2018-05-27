@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Sotomarket.Models.ReportGoodsResult>
+
+@{
+    ViewBag.Title = "Движение по товару";
+}
+<br />
+<button class="btn btn-primary" id="doPrint">
+    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Печать отчета
+</button>
+<div id="printContainer">
+    <h2>Отчет &laquo;Движение по товару&raquo; с @ViewBag.Start по @ViewBag.End</h2>
+    @if(Model!=null && Model.Count() >= 1)
+    {
+        var FirstRow = Model.First();
+        <h3>Наименование: @(FirstRow.Name). Цена: @(FirstRow.Price) тг. Наличие на складе на сегодня: @(FirstRow.Quantity)</h3>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                Дата
+            </th>
+            <th>
+                Приход, шт
+            </th>
+            <th>
+                На сумму, тг.
+            </th>
+            <th>
+                Расход, шт
+            </th>
+            <th>
+                На сумму, тг.
+            </th>
+            <th>
+                Наличие на конец дня
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.dat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IncomeDayAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IncomeDaySum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpenseDayAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpenseDaySum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatQuantity)
+            </td>
+        </tr>
+        }
+
+    </table>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#doPrint').click(function () {
+                $('#printContainer').printThis();
+            });
+        })
+    </script>
+}

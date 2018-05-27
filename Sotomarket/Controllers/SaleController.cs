@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Sotomarket.Controllers
 {
-    [Authorize(Roles ="Администратор,Директор,Менеджер")]
+    [Authorize(Roles = "Администратор,Директор,Менеджер")]
     public class SaleController : BaseController
     {
         // GET: Sale
@@ -20,22 +20,22 @@ namespace Sotomarket.Controllers
             {
                 var list = db.Sales.Select(x => new SaleViewModel
                 {
-                    Id=x.Id,
-                    ClientAddress=x.Order.ClientAddress,
-                    ClientDescription=x.Order.ClientDescription,
-                    ClientIdentifier=x.Order.ClientIdentifier,
-                    ClientName=x.Order.ClientName,
-                    OrderDate=x.Order.OrderDate,
-                    RealisationDate=x.RealizationDate,
-                    OrderId=x.OrderId,
-                    Operator=x.Operator.Lastname + " " + x.Operator.Firstname,
-                    Processed=x.Processed,
-                    Paytype=x.Paytype,
+                    Id = x.Id,
+                    ClientAddress = x.Order.ClientAddress,
+                    ClientDescription = x.Order.ClientDescription,
+                    ClientIdentifier = x.Order.ClientIdentifier,
+                    ClientName = x.Order.ClientName,
+                    OrderDate = x.Order.OrderDate,
+                    RealisationDate = x.RealizationDate,
+                    OrderId = x.OrderId,
+                    Operator = x.Operator.Lastname + " " + x.Operator.Firstname,
+                    Processed = x.Processed,
+                    Paytype = x.Paytype,
                 });
 
                 if (!string.IsNullOrEmpty(search))
                 {
-                    list = list.Where(x => x.Id.ToString().Contains(search) 
+                    list = list.Where(x => x.Id.ToString().Contains(search)
                                     || x.Operator.Contains(search)
                                     || x.ClientAddress.Contains(search)
                                     || x.ClientDescription.Contains(search)
@@ -43,12 +43,12 @@ namespace Sotomarket.Controllers
                                     || x.ClientName.Contains(search));
                 }
 
-                list=list.OrderByDescending(x=>x.RealisationDate).Skip(page * 50).Take(50);
+                list = list.OrderByDescending(x => x.RealisationDate).Skip(page * 50).Take(50);
 
                 return View(list.ToArray());
             }
         }
-        
+
         // GET: Sale/Create
         public ActionResult Create(int orderId)
         {
@@ -87,15 +87,15 @@ namespace Sotomarket.Controllers
                 {
                     item.pos = pos++;
                 }
-                return View("Edit",model);
+                return View("Edit", model);
             }
         }
-        
+
 
         // GET: Sale/Edit/5
         public ActionResult Edit(int id)
         {
-            using(var db = new SmDbContext())
+            using (var db = new SmDbContext())
             {
                 var entity = db.Sales.First(x => x.Id == id);
                 if (entity.Processed)
@@ -105,27 +105,27 @@ namespace Sotomarket.Controllers
                 }
                 var model = new SaleViewModel
                 {
-                    Id=entity.Id,
-                    ClientIdentifier=entity.Order.ClientIdentifier,
-                    ClientName=entity.Order.ClientName,
-                    OrderId=entity.OrderId,
-                    RealisationDate=entity.RealizationDate,
-                    Paytype=entity.Paytype,
-                    Operator=entity.Operator.Lastname + " " + entity.Operator.Firstname,
+                    Id = entity.Id,
+                    ClientIdentifier = entity.Order.ClientIdentifier,
+                    ClientName = entity.Order.ClientName,
+                    OrderId = entity.OrderId,
+                    RealisationDate = entity.RealizationDate,
+                    Paytype = entity.Paytype,
+                    Operator = entity.Operator.Lastname + " " + entity.Operator.Firstname,
                 };
-                
+
                 model.SaleItems = db.SaleItems.Where(x => x.SaleId == id).Select(x => new SaleItemViewModel
                 {
-                    Id=x.Id,
-                    Amount=x.Amount,
-                    Price=x.Price,
-                    GoodsId=x.GoodsId,
-                    GoodsBrand=x.Goods.Brand,
-                    GoodsCategory=x.Goods.GoodsCategory.Name,
-                    GoodsName=x.Goods.Name,
-                    GoodsSubCategory=x.Goods.GoodsSubCategory==null ? "" : x.Goods.GoodsSubCategory.Name,
-                    OrderItemId=x.OrderItemId,
-                    Discount=x.Discount
+                    Id = x.Id,
+                    Amount = x.Amount,
+                    Price = x.Price,
+                    GoodsId = x.GoodsId,
+                    GoodsBrand = x.Goods.Brand,
+                    GoodsCategory = x.Goods.GoodsCategory.Name,
+                    GoodsName = x.Goods.Name,
+                    GoodsSubCategory = x.Goods.GoodsSubCategory == null ? "" : x.Goods.GoodsSubCategory.Name,
+                    OrderItemId = x.OrderItemId,
+                    Discount = x.Discount
                 }).ToArray();
 
                 var pos = 0;
@@ -144,16 +144,16 @@ namespace Sotomarket.Controllers
                 var entity = db.Sales.First(x => x.Id == id);
                 var model = new SaleViewModel
                 {
-                    Paytype=entity.Paytype,
+                    Paytype = entity.Paytype,
                     Id = entity.Id,
                     ClientIdentifier = entity.Order.ClientIdentifier,
                     ClientName = entity.Order.ClientName,
                     OrderId = entity.OrderId,
                     RealisationDate = entity.RealizationDate,
-                    ClientAddress=entity.Order.ClientAddress,
-                    ClientDescription=entity.Order.ClientDescription,
-                    Operator= entity.Operator.Lastname + " " + entity.Operator.Firstname,
-                    OrderDate=entity.Order.OrderDate,
+                    ClientAddress = entity.Order.ClientAddress,
+                    ClientDescription = entity.Order.ClientDescription,
+                    Operator = entity.Operator.Lastname + " " + entity.Operator.Firstname,
+                    OrderDate = entity.Order.OrderDate,
                 };
 
                 model.SaleItems = db.SaleItems.Where(x => x.SaleId == id).Select(x => new SaleItemViewModel
@@ -166,7 +166,7 @@ namespace Sotomarket.Controllers
                     GoodsCategory = x.Goods.GoodsCategory.Name,
                     GoodsName = x.Goods.Name,
                     GoodsSubCategory = x.Goods.GoodsSubCategory == null ? "" : x.Goods.GoodsSubCategory.Name,
-                    Discount=x.Discount,
+                    Discount = x.Discount,
                 }).ToArray();
                 return View(model);
             }
@@ -188,7 +188,7 @@ namespace Sotomarket.Controllers
 
             try
             {
-                using(var db=new SmDbContext())
+                using (var db = new SmDbContext())
                 {
                     var tr = db.Database.BeginTransaction();
                     var entity = db.Sales.FirstOrDefault(x => x.Id == model.Id);
@@ -205,16 +205,16 @@ namespace Sotomarket.Controllers
                     entity.Paytype = model.Paytype;
                     entity.OperatorId = db.AspNetUsers.First(x => x.UserName == User.Identity.Name).Id;
                     entity.RealizationDate = model.RealisationDate.Value;
-                    entity.Processed = model.Processed??false;
+                    entity.Processed = model.Processed ?? false;
                     db.SaveChanges();
 
                     var existedIds = model.SaleItems.Select(x => x.Id);
-                    foreach(var item in db.SaleItems.Where(x => x.SaleId == model.Id && !existedIds.Contains(x.Id)))
+                    foreach (var item in db.SaleItems.Where(x => x.SaleId == model.Id && !existedIds.Contains(x.Id)))
                     {
                         db.SaleItems.Remove(item);
                     }
 
-                    foreach(var modelItem in model.SaleItems)
+                    foreach (var modelItem in model.SaleItems)
                     {
                         var entityItem = db.SaleItems.FirstOrDefault(x => x.Id == modelItem.Id);
                         if (entityItem == null)
@@ -233,12 +233,16 @@ namespace Sotomarket.Controllers
                     db.SaveChanges();
 
                     // Если документ проведен, то обновим наличие на складе
-                    if (model.Processed==true)
+                    if (model.Processed == true)
                     {
-                        foreach(var item in model.SaleItems)
+                        foreach (var item in model.SaleItems)
                         {
                             var goods = db.Goods.First(x => x.Id == item.GoodsId);
                             goods.Quantity -= item.Amount;
+                            if (goods.Quantity < 0)
+                            {
+                                throw new Exception("Недостаточно наличия \"" + goods.Name + "\" на складе!");
+                            }
                         }
                         db.SaveChanges();
                     }
@@ -257,18 +261,18 @@ namespace Sotomarket.Controllers
                 return View();
             }
         }
-        
+
         [HttpPost]
         public ActionResult Delete(int id)
         {
             try
             {
-                using(var db = new SmDbContext())
+                using (var db = new SmDbContext())
                 {
                     var tr = db.Database.BeginTransaction();
 
                     var entity = db.Sales.First(x => x.Id == id);
-                    foreach(var item in db.SaleItems.Where(x=>x.SaleId==id))
+                    foreach (var item in db.SaleItems.Where(x => x.SaleId == id))
                     {
                         db.SaleItems.Remove(item);
                     }

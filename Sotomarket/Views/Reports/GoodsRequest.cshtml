@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Отчет по продажам";
+}
+
+<h2>Отчет по продажам</h2>
+
+<hr />
+<form method="post">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="start" class="control-label col-md-2 required">Начало периода</label>
+            <div class="col-md-10">
+                <input type="text" data-val-date="Поле Начало периода должно содержать дату." id="start" name="start" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="start" class="control-label col-md-2 required">Конец периода</label>
+            <div class="col-md-10">
+                <input type="text" data-val-date="Поле Начало периода должно содержать дату." id="end" name="end" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="goodsId" class="control-label col-md-2 required">Наименование товара</label>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input type="text" class="form-control container-goodsname" readonly="readonly" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-default goods-selector" type="button">...</button>
+                    </span>
+                </div>
+                <input type="hidden" id="goodsId" name="goodsId" />
+            </div>
+        </div>
+
+
+
+        <input type="submit" class="btn btn-primary" value="Отчет" />
+    </div>
+</form>
+@section scripts{
+<script type="text/javascript">
+    function SelectGoods(tr) {
+        if (!tr.length) {
+            return;
+        }
+
+        var row = globSender.closest('tr');
+        $('#goodsId').val(tr.data('rowid'));
+        $('.container-goodsname').val($('td.container-Name', tr).html().trim());
+    }
+
+    $(function () {
+
+        function GoodsSelector(sender) {
+            globSender = sender;
+            $.get('@Url.Action("IndexPartial", "Goods",new { hideZero=false })', function (data) {
+                var dialog = bootbox.dialog({
+                    title: 'Товары',
+                    message: data,
+                    onEscape: true,
+                    size: 'large',
+                    buttons: {
+                        cancel: {
+                            label: "Отмена",
+                            className: 'btn-default',
+                        },
+                        ok: {
+                            label: "Выбрать",
+                            className: 'btn-primary btn-select-item',
+                            callback: function () {
+                                SelectGoods($('#goodsTable > tbody > tr.selected-row'));
+                            }
+                        }
+                    }
+                });
+
+                dialog.init(function () {
+                    $('.btn-select-item').prop('disabled', 'disabled');
+                    $('#goodsTable > tbody > tr').click(function () {
+                        $('#goodsTable > tbody > tr').removeClass('selected-row');
+                        $(this).addClass('selected-row');
+                        $('.btn-select-item').prop('disabled', '');
+                    });
+
+                    $('#goodsTable > tbody > tr').dblclick(function () {
+                        SelectGoods($(this));
+                        dialog.modal('hide');
+                    });
+                });
+            });
+        }
+
+        $('.goods-selector').click(function () { GoodsSelector(this); });
+    });
+</script>
+    }
