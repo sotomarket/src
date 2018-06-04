@@ -13,6 +13,7 @@
     <table class="table table-striped table-bordered reportTable">
         <thead>
             <tr>
+                <th></th>
                 <th>Дата</th>
                 <th>Кол-во заказов</th>
                 <th>Кол-во продаж</th>
@@ -25,6 +26,11 @@
             @foreach (var row in Model)
             {
                 <tr>
+                    <td>
+                        <button type="button" class="btn btn-default btn-xs expand-row">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </td>
                     <td>
                         @row.OrderDate.ToShortDateString()
                     </td>
@@ -48,6 +54,45 @@
                         @row.DeferredTransactionsCount
                     </td>
                 </tr>
+                <tr class="hidden addRow">
+                    <td></td>
+                    <td colspan="6">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Продавец-консультант</th>
+                                    <th>Наименование товара, цена по прайсу (тг.)</th>
+                                    <th>Количество по заказу</th>
+                                    <th>Кассир</th>
+                                    <th>Количество, шт.</th>
+                                    <th>Сумма (тг.)</th>
+                                    <th>Наименование клиента</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(var rowDetail in row.Details)
+                                {
+                                    <tr>
+                                        <td>@rowDetail.ShopAssistant</td>
+                                        <td>@rowDetail.GoodsName<br />@rowDetail.GoodsPrice</td>
+                                        <td>@rowDetail.OrderAmount</td>
+                                        <td>@rowDetail.Cashier</td>
+                                        <td>@rowDetail.Amount</td>
+                                        <td>
+                                            @(rowDetail.Price ?? 0 * rowDetail.Amount ?? 0 - rowDetail.Discount ?? 0)
+                                            @if (rowDetail.Discount.HasValue && rowDetail.Discount != 0)
+                                            {
+                                                <br /><span>Скидка @rowDetail.Discount</span>
+                                            }
+                                        </td>
+                                        <td>@rowDetail.ClientName</td>
+                                    </tr>
+                                    
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -56,7 +101,21 @@
     <script type="text/javascript">
         $(function () {
             $('#doPrint').click(function () {
+                //$('.addRow').addClass('hidden');
                 $('#printContainer').printThis();
+            });
+            $('.expand-row').click(function () {
+                var nextTr = $(this).closest('tr').next('tr');
+                var iconHolder = $('span', $(this));
+                if (iconHolder.hasClass('glyphicon-plus')) {
+                    iconHolder.removeClass('glyphicon-plus');
+                    iconHolder.addClass('glyphicon-minus');
+                    nextTr.removeClass('hidden');
+                } else {
+                    iconHolder.removeClass('glyphicon-minus');
+                    iconHolder.addClass('glyphicon-plus');
+                    nextTr.addClass('hidden');
+                }
             });
         })
     </script>

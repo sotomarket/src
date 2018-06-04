@@ -1,9 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Отчет по продажам";
+    ViewBag.Title = "Движение по товару";
 }
 
-<h2>Отчет по продажам</h2>
+<h2>Движение по товару</h2>
 
 <hr />
 <form method="post">
@@ -11,13 +11,13 @@
         <div class="form-group">
             <label for="start" class="control-label col-md-2 required">Начало периода</label>
             <div class="col-md-10">
-                <input type="text" data-val-date="Поле Начало периода должно содержать дату." id="start" name="start" class="form-control" />
+                <input type="text" data-val-date="Поле Начало периода должно содержать дату." id="start" name="start" class="form-control" autocomplete="off" />
             </div>
         </div>
         <div class="form-group">
             <label for="start" class="control-label col-md-2 required">Конец периода</label>
             <div class="col-md-10">
-                <input type="text" data-val-date="Поле Начало периода должно содержать дату." id="end" name="end" class="form-control" />
+                <input type="text" data-val-date="Поле Начало периода должно содержать дату." id="end" name="end" class="form-control" autocomplete="off" />
             </div>
         </div>
         <div class="form-group">
