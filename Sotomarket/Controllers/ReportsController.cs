@@ -214,7 +214,7 @@ left join
 (select sum(amount) totalIncomeAmount from[dbo].[Incomes] i join[dbo].[IncomeItems] ii on i.Id = ii.IncomeId where i.Processed = 1 and ii.GoodsId = @goodsId and i.IncomeDate between @dbeg and getdate()) ti on 1 = 1
 left join
 (select sum(amount) totalExpenseAmount from[dbo].[Sales] s join[dbo].[SaleItems] si on s.Id = si.SaleId where s.Processed = 1 and GoodsId = @goodsId and RealizationDate between @dbeg and GETDATE()) ts on 1 = 1
-where g.Id = @goodsId and (income.dat is not null or expense.dat is not null", new SqlParameter("dbeg", start),
+where g.Id = @goodsId and (income.dat is not null or expense.dat is not null)", new SqlParameter("dbeg", start),
     new SqlParameter("dend", end),
     new SqlParameter("goodsId", goodsId)).ToArray();
                 return View(result);
